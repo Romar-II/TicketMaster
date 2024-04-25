@@ -1,0 +1,41 @@
+﻿@model TicketMaster.Models.Ticket
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+<h1>Task completion</h1>
+
+<h3>Are you sure you want to mark this completed?</h3>
+<div>
+    <h4></h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Ticket description
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TicketBody)
+        </dd>
+        <dt class = "col-sm-2">
+            Ticket due time
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TicketTimeToFinish)
+        </dd>
+        <dt class = "col-sm-2">
+            Ticket submission time
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TicketCreationTime)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Mark as completed" class="btn btn-success" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

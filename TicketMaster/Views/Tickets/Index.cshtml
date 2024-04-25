@@ -1,0 +1,98 @@
+﻿@model IEnumerable<TicketMaster.Models.Ticket>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Open tickets</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Ticket description
+            </th>
+            <th>
+                Ticket due time
+            </th>
+            <th>
+                Ticket submission time
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="@GetRowClass(item)">
+                <td class="truncate">
+                    @Html.DisplayFor(modelItem => item.TicketBody)
+                </td>
+                <td>
+                    @item.TicketTimeToFinish.ToString("yyyy-MM-dd HH:mm")
+                </td>
+                <td>
+                    @item.TicketCreationTime.ToString("yyyy-MM-dd HH:mm")
+                </td>
+                <td>
+                    @calculateTimeDifference(item).ToString(@"dd\.hh\:mm\:ss")
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Mark as completed</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    .truncate {
+        max-width: 300px;
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+    }
+
+    .red-background {
+        background-color: red;
+    }
+</style>
+
+@functions {
+    TimeSpan calculateTimeDifference(Ticket item)
+    {
+        DateTime currentTime = DateTime.Now;
+
+        TimeSpan timeDifference = item.TicketTimeToFinish - currentTime;
+
+
+
+        return timeDifference;
+    }
+    string GetRowClass(Ticket item)
+    {
+        DateTime currentTime = DateTime.Now;
+
+        TimeSpan timeDifference = item.TicketTimeToFinish - currentTime;
+
+
+
+        if (currentTime > item.TicketTimeToFinish) // You can replace this condition with your own logic
+        {
+            return "red-background"; // Class name for red background
+        }
+        else if (currentTime < item.TicketTimeToFinish && timeDifference < TimeSpan.FromHours(1))
+        {
+            return "red-background"; // No additional class needed
+        }
+        else
+            return "";
+
+        
+    }
+}

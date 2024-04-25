@@ -1,0 +1,44 @@
+﻿@model TicketMaster.Models.Ticket
+
+@{
+    ViewData["Title"] = "Edit ticket";
+}
+
+<h1>Edit Ticket</h1>
+
+<h4>Ticket</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="TicketBody" class="control-label">Ticket description</label>
+                <textarea asp-for="TicketBody" class="form-control" style="resize: vertical;"></textarea>
+                <span asp-validation-for="TicketBody" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketTimeToFinish" class="control-label">Ticket due time</label>
+                <input asp-for="TicketTimeToFinish" class="form-control" />
+                <span asp-validation-for="TicketTimeToFinish" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketCreationTime" class="control-label">Ticket submission time</label>
+                <input asp-for="TicketCreationTime" class="form-control" readonly value="@Model.TicketCreationTime.ToString("yyyy-MM-dd HH:mm")" />
+                <span asp-validation-for="TicketCreationTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
