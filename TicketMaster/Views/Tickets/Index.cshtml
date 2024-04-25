@@ -82,13 +82,13 @@
 
 
 
-        if (currentTime > item.TicketTimeToFinish) // You can replace this condition with your own logic
+        if (currentTime > item.TicketTimeToFinish) 
         {
-            return "red-background"; // Class name for red background
+            return "red-background"; 
         }
         else if (currentTime < item.TicketTimeToFinish && timeDifference < TimeSpan.FromHours(1))
         {
-            return "red-background"; // No additional class needed
+            return "red-background"; 
         }
         else
             return "";
